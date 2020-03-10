@@ -1,6 +1,6 @@
 package br.com.cartoes.service;
 
-import br.com.cartoes.Entity.Cliente;
+import br.com.cartoes.entity.Cliente;
 import br.com.cartoes.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
