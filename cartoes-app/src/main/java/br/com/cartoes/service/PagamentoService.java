@@ -46,6 +46,10 @@ public class PagamentoService {
 	public List<Pagamento> buscarPorCartao(Long id) {
 		
 		List<Pagamento> listaPagamento = repository.buscaPorCartao(id);
+
+		if(listaPagamento.isEmpty()){
+			throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Não encontrado nenhum pagamento");
+		}
 		
 		return listaPagamento;
 		
