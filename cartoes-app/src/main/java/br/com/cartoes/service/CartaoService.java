@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import br.com.cartoes.controller.entrada.EntradaCartao;
@@ -11,6 +13,9 @@ import br.com.cartoes.entity.Cartao;
 import br.com.cartoes.entity.Cliente;
 import br.com.cartoes.repository.CartaoRepository;
 import br.com.cartoes.repository.ClienteRepository;
+import org.springframework.web.server.ResponseStatusException;
+
+import javax.persistence.EntityNotFoundException;
 
 @Service
 public class CartaoService {
@@ -31,8 +36,9 @@ public class CartaoService {
 			cartao.setClienteId(cliente.get());
 			return repository.save(cartao);
 		}
-		
-		return null;
+
+		throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Não foi possivel criar - cliente não encontrado");
+
 	}
 
 
@@ -55,6 +61,14 @@ public class CartaoService {
 			return cartao;
 		}
 
-		return null;
+		throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Não foi possivel atualizar - cartão não encontrado");
+
 	}
+
+	public List<Cartao> buscaPorNumero(String numeroCartao){
+
+		List<Cartao> listaCartao = repository.buscaPorNumero(numeroCartao);
+		return listaCartao;
+	}
+
 }

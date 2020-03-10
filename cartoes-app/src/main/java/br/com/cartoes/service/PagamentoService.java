@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import br.com.cartoes.controller.entrada.EntradaPagamento;
@@ -11,6 +12,9 @@ import br.com.cartoes.entity.Cartao;
 import br.com.cartoes.entity.Pagamento;
 import br.com.cartoes.repository.CartaoRepository;
 import br.com.cartoes.repository.PagamentoRepository;
+import org.springframework.web.server.ResponseStatusException;
+
+import javax.persistence.EntityNotFoundException;
 
 @Service
 public class PagamentoService {
@@ -33,9 +37,9 @@ public class PagamentoService {
 			pagamento.setValor(entradaPagamento.getValor());
 			return repository.save(pagamento);
 		}
-		
-		return null;
-		
+
+		throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Não foi possivel criar pagamento - cartão não encontrado");
+
 	}
 	
 	
